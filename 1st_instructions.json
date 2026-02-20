@@ -1,0 +1,31 @@
+# Project: ExamShieldAI - Scalable Laravel REST API
+
+## Objective
+Develop a robust Laravel 11/PHP 8.3 REST API to manage 5,000 concurrent students, AI grading, and proctoring logs.
+
+## 1. Database Schema & Models
+- **Users**: (id, name, email, password, role[admin, teacher, student], is_verified, otp_code).
+- **Exams**: (id, teacher_id, title, description, answer_key_json, duration_minutes, fee).
+- **Questions**: (id, exam_id, type[mcq, descriptive], content, points).
+- **Attempts**: (id, user_id, exam_id, status[started, submitted, graded], final_score).
+- **ProctorLogs**: (id, attempt_id, event_type[alt-tab, face_missing, multi_face], snapshot_url, timestamp).
+- **Transactions**: (id, user_id, amount, status, gateway_ref).
+
+## 2. Key Modules & Logic
+- **Auth**: Implement JWT Authentication (PHPOpenSourceSaver/JWT-Auth). Create a `VerifyEmail` job that sends an OTP via Mailtrap/SendGrid.
+- **AI Grading Module**: 
+    - Create a `GradeDescriptiveAnswer` Job.
+    - Integration: Use OpenAI PHP SDK. Prompt: "Compare [Student Answer] against [Teacher Key]. Assign a score out of 10 and provide 2 sentences of feedback."
+- **Proctoring API**: `POST /api/v1/proctor/log` - Receive base64 images, upload to AWS S3, and save record to `ProctorLogs`.
+- **Concurrency Support**: Use Laravel Queues (Redis driver) for all AI and Email tasks to prevent server hanging during peak exam times.
+
+## 3. Security & Performance
+- **RBAC**: Use Spatie Laravel-Permission for Role/Permission management.
+- **Middleware**: Create `VerifyOTP` and `IsProctored` middleware.
+- **Rate Limiting**: Set `throttle:5000,1` for the exam heartbeat endpoint.
+- **Validation**: Strict FormRequests for all endpoints.
+
+## 4. Deployment & DevOps
+- Dockerize the app using Laravel Sail.
+- Provide a `config/services.php` setup for OpenAI, AWS, and Stripe.
+- Git Strategy: Auto-commit changes with "agent: <feature_name>".

@@ -1,0 +1,68 @@
+{
+  "project_identity": {
+    "name": "ExamShieldAI",
+    "domain": "ExamShieldAI.com",
+    "architecture": "Decoupled React-Laravel REST API",
+    "scale_target": "5000 Concurrent Exam Sessions"
+  },
+  "database_schema_exact": {
+    "engine": "MySQL 8.0",
+    "tables": [
+      {
+        "table": "users",
+        "columns": "id, name, email, password, role[admin, teacher, student], is_verified, otp_code, created_at"
+      },
+      {
+        "table": "exams",
+        "columns": "id, teacher_id, title, description, answer_key_json, duration_minutes, fee, created_at",
+        "relationships": "belongsTo(User, teacher_id)"
+      },
+      {
+        "table": "attempts",
+        "columns": "id, user_id, exam_id, ai_score, ai_feedback, status[started, submitted, graded], created_at",
+        "relationships": "belongsTo(User), belongsTo(Exam)"
+      },
+      {
+        "table": "proctor_logs",
+        "columns": "id, attempt_id, event_type[alt-tab, face_missing, multi_face], snapshot_url, timestamp",
+        "relationships": "belongsTo(Attempt)"
+      }
+    ]
+  },
+  "backend_execution_logic": {
+    "framework": "Laravel 11",
+    "authentication": "JWT-Auth with Gmail OTP requirement via Middleware",
+    "dashboard_data_strategy": {
+      "student": "Query available exams using 'whereDoesntHave' attempts; fetch personal attempts with 'exam' eager-loaded.",
+      "teacher": "Query owned exams with 'withCount(attempts)'; fetch latest 10 ProctorLogs via 'Attempt.Exam' relationship filtering.",
+      "real_time": "Use Redis for caching session heartbeats for the 5000 concurrent users."
+    },
+    "ai_grading_engine": {
+      "provider": "OpenAI GPT-4o",
+      "logic": "Queue-based processing. Compare 'student_answer' against 'exams.answer_key_json'. Output: Integer score + 2-sentence feedback."
+    }
+  },
+  "frontend_execution_logic": {
+    "framework": "React.js + Tailwind CSS",
+    "state_management": "Zustand with Persistence for Exam Interface",
+    "core_components": {
+      "proctoring": "TensorFlow.js BlazeFace for local monitoring; trigger 'POST /proctor/log' only on violation.",
+      "security": "Window blur detection for Alt-Tab; auto-submit on 3rd violation.",
+      "data_fetching": "Axios interceptors for JWT; exact mapping to Laravel API Resources."
+    },
+    "pages": [
+      "Auth: Gmail OTP Verification screen.",
+      "Student Dashboard: Dynamic cards for 'Available Exams' and 'My Results'.",
+      "Exam Interface: Locked full-screen, sidebar question navigator, webcam overlay."
+    ]
+  },
+  "integration_requirements": {
+    "payment": "Stripe/SSLCommerz integration; lock 'Start Exam' until 'transactions.status' is success.",
+    "storage": "AWS S3 for proctoring snapshots (Public/Private signed URLs).",
+    "deployment": "Docker Compose (Laravel, MySQL, Redis, Nginx)."
+  },
+  "governance": {
+    "no_mock_data": "All controllers must use Eloquent queries. UI must use real API response shapes.",
+    "security_first": "Sanitize all descriptive inputs; enforce Rate Limiting (5000req/min) on heartbeat endpoints."
+  }
+}
