@@ -1,73 +1,156 @@
-# Welcome to your Lovable project
+# ExamShieldAI - AI-Powered Proctored Exam Platform
 
-## Project info
+An enterprise-grade exam integrity platform with real-time AI proctoring, face detection, and automated grading capabilities.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Features
 
-## How can I edit this code?
+- **Real-time AI Proctoring**: Advanced monitoring during exams
+- **Face Detection**: Ensures test taker identity verification
+- **Automated Grading**: Quick and accurate assessment
+- **Secure Exam Interface**: Tamper-proof exam environment
+- **Multi-role Support**: Student, Teacher, and Administrator roles
 
-There are several ways of editing your application.
+## Prerequisites
 
-**Use Lovable**
+- Node.js & npm - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- PHP 8.5+ (for Laravel backend)
+- MySQL 8.0+ (for database)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Quick Start
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+### Frontend Setup
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Navigate to project directory
+cd exam_guard
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
+
+# Build for production
+npm run build
 ```
 
-**Edit a file directly in GitHub**
+The build automatically copies assets to `backend/public/` for Laravel to serve.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Backend Setup
 
-**Use GitHub Codespaces**
+```sh
+# Navigate to backend
+cd backend
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Install PHP dependencies
+composer install
 
-## What technologies are used for this project?
+# Copy environment file
+cp .env.example .env
 
-This project is built with:
+# Generate app key
+php artisan key:generate
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+# Run migrations
+php artisan migrate
 
-## How can I deploy this project?
+# Start Laravel server
+php artisan serve
+```
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+Access the app at `http://127.0.0.1:8000`
 
-## Can I connect a custom domain to my Lovable project?
+## Project Structure
 
-Yes, you can!
+```
+exam_guard/
+├── src/                    # React frontend source
+│   ├── components/        # Reusable UI components
+│   ├── pages/            # Page components
+│   ├── hooks/            # Custom React hooks
+│   ├── stores/           # State management
+│   └── lib/              # Utilities and schemas
+├── backend/              # Laravel API server
+│   ├── app/              # Application logic
+│   ├── routes/           # API endpoints
+│   ├── database/         # Migrations & seeders
+│   └── public/           # Built frontend (auto-generated)
+└── dist/                 # Production build output
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Technologies
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+### Frontend
+- Vite - Lightning-fast build tool
+- React - UI framework
+- TypeScript - Type safety
+- Tailwind CSS - Styling
+- shadcn-ui - Component library
+
+### Backend
+- Laravel 12 - PHP framework
+- MySQL - Database
+- Pest - Testing framework
+- Sanctum - API authentication
+
+## Development Workflow
+
+1. **Frontend changes**: Edit in `src/` → `npm run dev` for live reload
+2. **Build & sync**: `npm run build` → Automatically copies to `backend/public/`
+3. **Backend changes**: Edit in `backend/` → Changes apply immediately with Laravel's file watcher
+4. **Start server**: `php artisan serve` from `backend/` folder
+
+## API Routes
+
+All API endpoints are prefixed with `/api/v1/`:
+
+- `POST /register` - User registration
+- `POST /login` - User login
+- `POST /verify-otp` - OTP verification
+- `GET /exams` - Fetch exams (requires authentication)
+- `POST /exams` - Create exam (teacher only)
+- `POST /exams/{id}/start` - Start exam (student)
+
+## Session Management
+
+The app uses **file-based sessions** for development (no database required). To use database sessions:
+
+1. Update `backend/.env`: `SESSION_DRIVER=database`
+2. Run migrations: `php artisan migrate`
+3. Start MySQL service
+
+## Troubleshooting
+
+### Build fails
+```bash
+npm install  # Reinstall dependencies
+npm run build
+```
+
+### Laravel server won't start
+```bash
+php artisan config:clear
+php artisan cache:clear
+php artisan serve
+```
+
+### Database connection refused
+Ensure MySQL is running and credentials in `backend/.env` are correct.
+
+## Contributing
+
+1. Create a feature branch
+2. Make changes
+3. Test locally
+4. Submit pull request
+
+## License
+
+Proprietary - ExamShieldAI
+
+## Support
+
+For issues or questions, contact the development team.

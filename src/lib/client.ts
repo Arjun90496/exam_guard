@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://api.examshieldai.com/v1"; // Mock base
+const BASE_URL = "http://127.0.0.1:8000/api/v1";
 
 export const apiClient = axios.create({
   baseURL: BASE_URL,
@@ -50,4 +50,10 @@ export const api = {
   createExam: (data: unknown) => apiClient.post("/exams", data),
   getResults: () => apiClient.get("/results"),
   getStudents: (examId: string) => apiClient.get(`/exams/${examId}/students`),
+
+  // Admin Methods
+  getAdminStats: () => apiClient.get("/admin/dashboard-stats"),
+  getAdminUsers: (search?: string) => apiClient.get(`/admin/users${search ? `?search=${search}` : ''}`),
+  getAdminExams: () => apiClient.get("/admin/exams"),
+  getAdminTransactions: () => apiClient.get("/admin/transactions"),
 };
