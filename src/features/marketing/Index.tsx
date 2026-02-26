@@ -90,7 +90,7 @@ const stats = [
 
 export default function Index() {
   return (
-    <div className="min-h-screen gradient-hero">
+    <div className="flex flex-col min-h-screen bg-background overflow-x-hidden">
       {/* Navigation */}
       <nav className="fixed top-0 inset-x-0 z-50 glass border-b border-border/50">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -121,162 +121,71 @@ export default function Index() {
       </nav>
 
       {/* Hero */}
-      <section className="pt-32 pb-24 px-6 max-w-7xl mx-auto">
-        <div className="text-center max-w-4xl mx-auto animate-fade-in">
-          <Badge
-            variant="outline"
-            className="mb-6 border-primary/30 bg-primary/10 text-primary px-4 py-1.5 text-xs font-medium tracking-wide uppercase"
-          >
-            <Zap className="w-3 h-3 mr-1.5" />
-            AI-Powered Exam Integrity Platform
-          </Badge>
-
-          <h1 className="text-5xl md:text-7xl font-extrabold leading-[1.05] tracking-tight mb-6">
-            Proctored Exams.
-            <br />
-            <span className="text-gradient">Zero Compromise.</span>
-          </h1>
-
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-10">
-            ExamShieldAI delivers military-grade proctoring with real-time face detection, behavioral analysis, and
-            AI grading — all in one enterprise-ready platform.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button
-              size="lg"
-              className="gradient-primary text-primary-foreground shadow-glow font-semibold px-8 h-12 text-base"
-              asChild
+      <section className="pt-32 pb-20 px-6 bg-background relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none" />
+        <div className="max-w-7xl mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="text-left animate-slide-in-right">
+            <Badge
+              variant="outline"
+              className="mb-8 border-primary/30 bg-primary/10 text-primary px-4 py-1.5 text-xs font-bold tracking-wide uppercase"
             >
-              <Link to="/student">
-                Start Demo
-                <ChevronRight className="ml-1 w-4 h-4" />
-              </Link>
-            </Button>
-            <Button variant="outline" size="lg" className="h-12 px-8 text-base border-border/60 hover:bg-secondary" asChild>
-              <Link to="/teacher">Teacher Dashboard</Link>
-            </Button>
-          </div>
+              <Zap className="w-3 h-3 mr-1.5" />
+              AI-Powered Exam Integrity Platform
+            </Badge>
 
-          <div className="mt-6 flex items-center justify-center gap-1 text-sm text-muted-foreground">
-            <CheckCircle2 className="w-4 h-4 text-success" />
-            <span>No credit card required</span>
-            <span className="mx-2">·</span>
-            <CheckCircle2 className="w-4 h-4 text-success" />
-            <span>Free plan available</span>
-            <span className="mx-2">·</span>
-            <CheckCircle2 className="w-4 h-4 text-success" />
-            <span>GDPR compliant</span>
-          </div>
-        </div>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight mb-6 text-foreground">
+              Proctored Exams.
+              <br />
+              <span className="text-primary">Zero Compromise.</span>
+            </h1>
 
-        {/* Hero Visual */}
-        <div className="mt-20 relative">
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10 pointer-events-none" />
-          <div className="rounded-2xl border border-border/50 overflow-hidden shadow-2xl glass">
-            <div className="bg-secondary/50 px-4 py-3 flex items-center gap-2 border-b border-border/50">
-              <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-danger/70" />
-                <div className="w-3 h-3 rounded-full bg-warning/70" />
-                <div className="w-3 h-3 rounded-full bg-success/70" />
-              </div>
-              <div className="flex-1 mx-4 bg-background/50 rounded-md px-3 py-1 text-xs text-muted-foreground font-mono text-center">
-                examshieldai.com/exam/live
-              </div>
-              <div className="flex items-center gap-1.5 text-xs text-success">
-                <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
-                Secure Session
-              </div>
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-lg">
+              ExamShieldAI delivers military-grade proctoring with real-time face detection, behavioral analysis, and
+              AI grading. All in one enterprise-ready platform.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-8 h-14 text-base rounded-xl"
+                asChild
+              >
+                <Link to="/student">
+                  Start Demo
+                  <ChevronRight className="ml-2 w-5 h-5" />
+                </Link>
+              </Button>
+              <Button variant="outline" size="lg" className="h-14 px-8 text-base border-border/60 hover:bg-secondary/10 rounded-xl" asChild>
+                <Link to="/teacher">Teacher Dashboard</Link>
+              </Button>
             </div>
-            <div className="p-6 grid grid-cols-12 gap-4 min-h-[340px]">
-              {/* Question navigator mock */}
-              <div className="col-span-2 space-y-2">
-                <p className="text-xs text-muted-foreground font-medium mb-3">Questions</p>
-                <div className="grid grid-cols-4 gap-1.5">
-                  {Array.from({ length: 20 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className={`w-6 h-6 rounded text-[9px] font-bold flex items-center justify-center ${
-                        i < 5 ? "bg-success/20 text-success border border-success/30" :
-                        i === 5 ? "bg-primary text-primary-foreground" :
-                        i === 8 || i === 12 ? "bg-warning/20 text-warning border border-warning/30" :
-                        "bg-secondary text-muted-foreground"
-                      }`}
-                    >
-                      {i + 1}
-                    </div>
-                  ))}
-                </div>
-              </div>
 
-              {/* Main question area mock */}
-              <div className="col-span-7 space-y-4">
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="text-xs border-primary/30 text-primary">MCQ</Badge>
-                  <Badge variant="outline" className="text-xs">Q6 of 40</Badge>
-                  <Badge className="text-xs bg-success/20 text-success border-0 ml-auto">2 marks</Badge>
-                </div>
-                <p className="text-sm font-medium leading-relaxed">
-                  What is the time complexity of searching in a balanced Binary Search Tree (BST)?
-                </p>
-                <div className="space-y-2">
-                  {["O(1)", "O(log n)", "O(n)", "O(n log n)"].map((opt, i) => (
-                    <div
-                      key={i}
-                      className={`px-4 py-2.5 rounded-lg border text-sm cursor-pointer transition-colors ${
-                        i === 1
-                          ? "border-primary/50 bg-primary/10 text-primary"
-                          : "border-border/50 hover:border-border text-muted-foreground"
-                      }`}
-                    >
-                      <span className="font-mono text-xs mr-2 opacity-60">{String.fromCharCode(65 + i)}.</span>
-                      {opt}
-                    </div>
-                  ))}
-                </div>
-              </div>
+            <div className="mt-8 flex flex-wrap items-center gap-y-2 gap-x-6 text-sm font-medium text-muted-foreground">
+              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-success" /> No credit card required</span>
+              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-success" /> Free plan available</span>
+              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-success" /> GDPR compliant</span>
+            </div>
+          </div>
 
-              {/* Webcam + timer mock */}
-              <div className="col-span-3 space-y-3">
-                <div className="relative rounded-xl overflow-hidden bg-secondary/80 aspect-video">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="w-10 h-10 rounded-full bg-primary/20 border-2 border-primary/40 mx-auto mb-1 flex items-center justify-center">
-                        <Eye className="w-5 h-5 text-primary" />
-                      </div>
-                      <p className="text-[9px] text-muted-foreground">Webcam Active</p>
-                    </div>
-                  </div>
-                  <div className="absolute top-1.5 left-1.5 flex items-center gap-1">
-                    <div className="w-1.5 h-1.5 rounded-full bg-danger animate-pulse" />
-                    <span className="text-[9px] text-danger font-medium">REC</span>
-                  </div>
-                  <div className="absolute top-1.5 right-1.5 bg-success/20 border border-success/30 text-success rounded px-1 py-0.5 text-[8px]">
-                    ✓ Face OK
-                  </div>
-                </div>
+          {/* Hero Visual */}
+          <div className="mt-20 relative xl:aspect-video rounded-2xl border border-border/50 overflow-hidden shadow-2xl">
+            <img
+              src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1400&auto=format&fit=crop"
+              alt="Student taking an online exam"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-primary/10 mix-blend-overlay pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent pointer-events-none"></div>
 
-                <div className="bg-secondary/50 rounded-xl p-3 text-center border border-border/50">
-                  <p className="text-xs text-muted-foreground mb-1">Time Remaining</p>
-                  <p className="text-2xl font-mono font-bold text-warning">01:22:45</p>
+            {/* Overlay UI element to keep some of the original interactive feel */}
+            <div className="absolute bottom-6 left-6 right-6">
+              <div className="bg-background/90 backdrop-blur-md p-4 rounded-xl border border-border/50 shadow-lg flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-success/20 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-6 h-6 text-success" />
                 </div>
-
-                <div className="bg-secondary/50 rounded-xl p-3 border border-border/50">
-                  <p className="text-xs text-muted-foreground mb-2">AI Proctoring</p>
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between text-xs">
-                      <span className="text-muted-foreground">Tab switches</span>
-                      <span className="text-success font-medium">0</span>
-                    </div>
-                    <div className="flex justify-between text-xs">
-                      <span className="text-muted-foreground">Face detected</span>
-                      <span className="text-success font-medium">✓</span>
-                    </div>
-                    <div className="flex justify-between text-xs">
-                      <span className="text-muted-foreground">Violations</span>
-                      <span className="text-success font-medium">0</span>
-                    </div>
-                  </div>
+                <div>
+                  <p className="text-sm font-bold text-foreground">Secure Session Active</p>
+                  <p className="text-xs text-muted-foreground">AI proctoring and environment monitoring running smoothly.</p>
                 </div>
               </div>
             </div>
@@ -284,78 +193,99 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Stats */}
-      <section id="stats" className="py-16 border-y border-border/30">
-        <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
+      {/* Stats - Exam.net style flat row */}
+      <section id="stats" className="py-12 border-y border-border/50 bg-secondary/10 relative z-10">
+        <div className="max-w-7xl mx-auto w-full px-6 flex flex-wrap justify-between items-center gap-8">
           {stats.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <p className="text-3xl md:text-4xl font-extrabold text-gradient mb-1">{stat.value}</p>
-              <p className="text-sm text-muted-foreground">{stat.label}</p>
+            <div key={stat.label} className="text-left">
+              <p className="text-4xl md:text-5xl font-black text-foreground mb-1">{stat.value}</p>
+              <p className="text-sm md:text-base text-muted-foreground font-medium">{stat.label}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Features */}
-      <section id="features" className="py-24 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4 border-accent/30 bg-accent/10 text-accent text-xs uppercase tracking-wide">
-              Platform Features
-            </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-              Everything you need for{" "}
-              <span className="text-gradient">exam integrity</span>
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Purpose-built for modern education with AI at its core
-            </p>
+      {/* Features - Exam.net Alternating Splits & Grids */}
+      <section id="features" className="py-24 px-6 bg-background">
+        <div className="max-w-7xl mx-auto w-full">
+          {/* Top Features - Checkmark List style */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-24">
+            <div>
+              <h2 className="text-4xl md:text-5xl font-black mb-6 text-foreground tracking-tight">
+                Everything you need to create and conduct secure exams
+              </h2>
+              <p className="text-xl text-muted-foreground mb-10 leading-relaxed">
+                We simplify all the moving pieces so you can administer your exams securely and with confidence without technical complexity.
+              </p>
+              <div className="space-y-6">
+                {features.slice(0, 3).map((feature) => (
+                  <div key={feature.title} className="flex items-start gap-4">
+                    <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-success/20 flex items-center justify-center">
+                      <CheckCircle2 className="w-4 h-4 text-success" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-foreground mb-1">{feature.title}</h3>
+                      <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Visual Image Right Side */}
+            <div className="bg-secondary/10 rounded-2xl border border-border/50 aspect-square flex items-center justify-center p-8 relative overflow-hidden shadow-xl">
+              <img
+                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000&auto=format&fit=crop"
+                alt="Students studying online"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/30 via-transparent to-transparent pointer-events-none" />
+              <div className="text-center relative z-10 bg-background/90 backdrop-blur-md p-8 rounded-2xl border border-border/50 shadow-lg">
+                <Shield className="w-16 h-16 text-primary mx-auto mb-4" />
+                <p className="font-bold text-lg text-foreground">Military-Grade Security</p>
+              </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {features.map((feature) => (
+          {/* Bottom Features - Grid style */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-black mb-4 text-foreground">Just a few ways you can use ExamShieldAI</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {features.slice(3).map((feature) => (
               <div
                 key={feature.title}
-                className="group p-6 rounded-2xl border border-border/50 gradient-card hover:border-border transition-all duration-300 hover:shadow-card"
+                className="p-8 rounded-2xl bg-secondary/5 border border-transparent hover:border-border/50 transition-all duration-300 group"
               >
-                <div className={`w-11 h-11 rounded-xl ${feature.bg} flex items-center justify-center mb-4`}>
-                  <feature.icon className={`w-5 h-5 ${feature.color}`} />
+                <div className={`w-14 h-14 rounded-2xl bg-background border border-border/50 flex items-center justify-center mb-6 shadow-sm group-hover:-translate-y-1 transition-transform`}>
+                  <feature.icon className={`w-6 h-6 text-foreground`} />
                 </div>
-                <div className="flex items-start justify-between mb-2">
-                  <h3 className="font-semibold text-foreground">{feature.title}</h3>
-                  <Badge variant="outline" className="text-[10px] ml-2 shrink-0 border-border/50 text-muted-foreground">
-                    {feature.badge}
-                  </Badge>
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
+                <h3 className="text-xl font-bold text-foreground mb-3">{feature.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Pricing */}
-      <section id="pricing" className="py-24 px-6">
-        <div className="max-w-6xl mx-auto">
+      {/* Pricing - Exam.net style flat wide sections */}
+      <section id="pricing" className="py-24 px-6 bg-secondary/5 border-y border-border/30">
+        <div className="max-w-6xl mx-auto w-full">
           <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4 border-primary/30 bg-primary/10 text-primary text-xs uppercase tracking-wide">
-              Pricing
-            </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-              Simple, transparent <span className="text-gradient">pricing</span>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4 text-foreground">
+              Simple, transparent pricing
             </h2>
-            <p className="text-muted-foreground text-lg">No hidden fees. Scale as you grow.</p>
+            <p className="text-muted-foreground text-xl">No hidden fees. Scale as you grow.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {pricingPlans.map((plan) => (
               <div
                 key={plan.name}
-                className={`rounded-2xl p-7 border transition-all duration-300 ${
-                  plan.highlight
-                    ? "border-primary/50 bg-primary/5 shadow-glow relative"
-                    : "border-border/50 gradient-card"
-                }`}
+                className={`rounded-2xl p-7 border transition-all duration-300 ${plan.highlight
+                  ? "border-primary/50 bg-primary/5 shadow-glow relative"
+                  : "border-border/50 gradient-card"
+                  }`}
               >
                 {plan.highlight && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
@@ -403,30 +333,47 @@ export default function Index() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="p-12 rounded-3xl border border-primary/20 bg-primary/5 shadow-glow">
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-              Ready to <span className="text-gradient">shield your exams?</span>
-            </h2>
-            <p className="text-muted-foreground text-lg mb-8 max-w-xl mx-auto">
-              Join 500+ institutions running secure, AI-graded exams with ExamShieldAI.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="gradient-primary text-primary-foreground shadow-glow font-semibold px-10 h-12" asChild>
-                <Link to="/signup">Create Free Account</Link>
-              </Button>
-              <Button size="lg" variant="outline" className="h-12 px-10 border-border/60" asChild>
-                <Link to="/login">Sign In</Link>
-              </Button>
+      {/* Final CTA - Exam.net Checklist Box Style */}
+      <section className="py-24 px-6 bg-background">
+        <div className="max-w-5xl mx-auto w-full">
+          <div className="p-12 md:p-16 rounded-3xl bg-secondary/10 border border-border">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-8 text-foreground leading-[1.1]">
+                  Create and conduct your first exam in less than an hour
+                </h2>
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-center gap-3 text-lg font-medium text-muted-foreground">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                    Without talking to a salesperson
+                  </li>
+                  <li className="flex items-center gap-3 text-lg font-medium text-muted-foreground">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                    Without putting a credit card on file
+                  </li>
+                  <li className="flex items-center gap-3 text-lg font-medium text-muted-foreground">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                    Without technical integrations
+                  </li>
+                </ul>
+              </div>
+              <div className="flex flex-col gap-6 justify-center items-center text-center p-8 bg-background rounded-2xl border border-border shadow-sm">
+                <p className="text-xl font-bold text-foreground">Try ExamShieldAI today</p>
+                <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-10 h-14 rounded-xl text-lg" asChild>
+                  <Link to="/signup">Start your free trial</Link>
+                </Button>
+                <div className="text-sm text-muted-foreground space-y-1">
+                  <p>30-day free trial.</p>
+                  <p>No credit card required.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border/30 py-8 px-6">
+      <footer className="py-12 px-6 bg-foreground text-background">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 gradient-primary rounded flex items-center justify-center">
@@ -434,10 +381,10 @@ export default function Index() {
             </div>
             <span className="font-semibold text-sm">ExamShieldAI</span>
           </div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-sm text-muted">
             © 2026 ExamShieldAI. Enterprise exam integrity platform. GDPR · SOC 2 · ISO 27001 compliant.
           </p>
-          <div className="flex gap-4 text-xs text-muted-foreground">
+          <div className="flex gap-6 text-sm font-medium">
             <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
             <a href="#" className="hover:text-foreground transition-colors">Terms</a>
             <a href="#" className="hover:text-foreground transition-colors">Security</a>

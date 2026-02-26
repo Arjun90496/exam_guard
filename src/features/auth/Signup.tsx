@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Shield, Mail, Lock, Eye, EyeOff, User, ArrowRight, Loader2, Building } from "lucide-react";
+import { Shield, Mail, Lock, Eye, EyeOff, User, ArrowRight, Loader2, Building, GraduationCap, Presentation } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -173,13 +173,15 @@ export default function Signup() {
             <button
               key={role}
               onClick={() => setSelectedRole(role)}
-              className={`py-2.5 rounded-lg text-sm font-medium capitalize transition-all ${
-                selectedRole === role
-                  ? "bg-primary text-primary-foreground shadow-glow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
+              className={`py-2.5 rounded-lg text-sm font-medium capitalize transition-all ${selectedRole === role
+                ? "bg-primary text-primary-foreground shadow-glow-sm"
+                : "text-muted-foreground hover:text-foreground"
+                }`}
             >
-              {role === "student" ? "👨‍🎓 " : "👩‍🏫 "}{role.charAt(0).toUpperCase() + role.slice(1)}
+              <div className="flex items-center justify-center">
+                {role === "student" ? <GraduationCap className="w-5 h-5 mr-2" /> : <Presentation className="w-5 h-5 mr-2" />}
+                {role.charAt(0).toUpperCase() + role.slice(1)}
+              </div>
             </button>
           ))}
         </div>

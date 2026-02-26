@@ -4,7 +4,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Shield, Users, AlertTriangle, Clock, Plus, BarChart2, LogOut,
-  Bell, CheckCircle2, ChevronRight, Activity, Eye, Flag, Wifi, WifiOff, X
+  Bell, CheckCircle2, ChevronRight, Activity, Eye, Flag, Wifi, WifiOff, X,
+  FileText, PenTool, Shuffle, Rocket
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -114,11 +115,10 @@ export default function TeacherDashboard() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                activeTab === tab.id
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all ${activeTab === tab.id
                   ? "bg-primary text-primary-foreground shadow-glow-sm"
                   : "text-muted-foreground hover:text-foreground"
-              }`}
+                }`}
             >
               <tab.icon className="w-3.5 h-3.5" />
               {tab.label}
@@ -279,13 +279,12 @@ export default function TeacherDashboard() {
               {[1, 2, 3].map((step) => (
                 <div key={step} className="flex items-center gap-2">
                   <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
-                      createStep > step
+                    className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${createStep > step
                         ? "gradient-primary text-primary-foreground shadow-glow-sm"
                         : createStep === step
-                        ? "gradient-primary text-primary-foreground shadow-glow-sm"
-                        : "bg-secondary border border-border/50 text-muted-foreground"
-                    }`}
+                          ? "gradient-primary text-primary-foreground shadow-glow-sm"
+                          : "bg-secondary border border-border/50 text-muted-foreground"
+                      }`}
                   >
                     {createStep > step ? <CheckCircle2 className="w-4 h-4" /> : step}
                   </div>
@@ -381,14 +380,13 @@ export default function TeacherDashboard() {
                           key={type}
                           type="button"
                           onClick={() => setQuestionType(type)}
-                          className={`p-3 rounded-xl border text-sm font-medium text-left transition-all ${
-                            questionType === type
+                          className={`p-3 rounded-xl border text-sm font-medium text-left transition-all ${questionType === type
                               ? "border-primary/50 bg-primary/10 text-primary"
                               : "border-border/50 text-muted-foreground hover:border-border"
-                          }`}
+                            }`}
                         >
-                          <div className="text-base mb-1">
-                            {type === "mcq" ? "📝" : type === "descriptive" ? "✍️" : "🔀"}
+                          <div className="mb-1 flex justify-center text-foreground">
+                            {type === "mcq" ? <FileText className="w-6 h-6" /> : type === "descriptive" ? <PenTool className="w-6 h-6" /> : <Shuffle className="w-6 h-6" />}
                           </div>
                           <div>{type === "mcq" ? "MCQ" : type === "descriptive" ? "Descriptive" : "Mixed"}</div>
                         </button>
@@ -493,7 +491,7 @@ export default function TeacherDashboard() {
                       Back
                     </Button>
                     <Button type="submit" className="flex-1 gradient-primary text-primary-foreground shadow-glow font-semibold">
-                      🚀 Publish Exam
+                      <Rocket className="w-4 h-4 mr-2" /> Publish Exam
                     </Button>
                   </div>
                 </div>

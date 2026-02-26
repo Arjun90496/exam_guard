@@ -21,7 +21,7 @@ function ViolationModal({ message, onDismiss }: { message: string; onDismiss: ()
             <AlertTriangle className="w-6 h-6 text-danger" />
           </div>
           <div>
-            <h3 className="font-bold text-danger text-lg mb-1">⚠️ Proctoring Violation</h3>
+            <h3 className="font-bold text-danger text-lg mb-1">Proctoring Violation</h3>
             <p className="text-sm text-muted-foreground leading-relaxed">{message}</p>
           </div>
         </div>
@@ -51,11 +51,14 @@ function WebcamFeed({ onFaceViolation }: { onFaceViolation: (reason: string) => 
 
   useEffect(() => {
     let active = true;
+    let currentStream: MediaStream | null = null;
+
     navigator.mediaDevices
       .getUserMedia({ video: { width: 320, height: 240, facingMode: "user" } })
       .then((s) => {
         if (!active) { s.getTracks().forEach(t => t.stop()); return; }
         setStream(s);
+        currentStream = s;
         if (videoRef.current) videoRef.current.srcObject = s;
         setFaceStatus("ok");
 
@@ -86,9 +89,9 @@ function WebcamFeed({ onFaceViolation }: { onFaceViolation: (reason: string) => 
     return () => {
       active = false;
       if (noFaceTimerRef.current) clearTimeout(noFaceTimerRef.current);
-      stream?.getTracks().forEach(t => t.stop());
+      if (currentStream) currentStream.getTracks().forEach(t => t.stop());
     };
-  }, []);
+  }, [onFaceViolation]);
 
   return (
     <div className="space-y-2">
@@ -97,18 +100,16 @@ function WebcamFeed({ onFaceViolation }: { onFaceViolation: (reason: string) => 
           <Camera className="w-3.5 h-3.5" />
           Webcam Feed
         </p>
-        <div className={`flex items-center gap-1 text-xs px-2 py-0.5 rounded-full border ${
-          faceStatus === "ok" ? "bg-success/10 border-success/30 text-success" :
+        <div className={`flex items-center gap-1 text-xs px-2 py-0.5 rounded-full border ${faceStatus === "ok" ? "bg-success/10 border-success/30 text-success" :
           faceStatus === "none" ? "bg-warning/10 border-warning/30 text-warning" :
-          faceStatus === "multiple" ? "bg-danger/10 border-danger/30 text-danger" :
-          "bg-muted border-border text-muted-foreground"
-        }`}>
-          <div className={`w-1.5 h-1.5 rounded-full ${
-            faceStatus === "ok" ? "bg-success animate-pulse" :
+            faceStatus === "multiple" ? "bg-danger/10 border-danger/30 text-danger" :
+              "bg-muted border-border text-muted-foreground"
+          }`}>
+          <div className={`w-1.5 h-1.5 rounded-full ${faceStatus === "ok" ? "bg-success animate-pulse" :
             faceStatus === "none" ? "bg-warning animate-pulse" :
-            faceStatus === "multiple" ? "bg-danger animate-pulse" :
-            "bg-muted-foreground"
-          }`} />
+              faceStatus === "multiple" ? "bg-danger animate-pulse" :
+                "bg-muted-foreground"
+            }`} />
           {faceStatus === "ok" ? "Face OK" : faceStatus === "none" ? "No Face" : faceStatus === "multiple" ? "Multi-Face" : "Starting…"}
         </div>
       </div>
@@ -200,11 +201,10 @@ function QuestionNavigator({
             <button
               key={q.id}
               onClick={() => onSelect(i)}
-              className={`w-full aspect-square rounded-lg border text-xs font-bold flex items-center justify-center transition-all ${
-                i === currentIndex
-                  ? "bg-primary text-primary-foreground border-primary shadow-glow-sm ring-1 ring-primary/50"
-                  : statusCls[getStatus(q) as keyof typeof statusCls] || statusCls.unanswered
-              }`}
+              className={`w-full aspect-square rounded-lg border text-xs font-bold flex items-center justify-center transition-all ${i === currentIndex
+                ? "bg-primary text-primary-foreground border-primary shadow-glow-sm ring-1 ring-primary/50"
+                : statusCls[getStatus(q) as keyof typeof statusCls] || statusCls.unanswered
+                }`}
             >
               {i + 1}
             </button>
@@ -270,7 +270,7 @@ export default function ExamInterface() {
   // Initialize exam
   useEffect(() => {
     startExam("exam-001", examDuration);
-  }, []);
+  }, [startExam, examDuration]);
 
   // Timer countdown
   useEffect(() => {
@@ -319,7 +319,7 @@ export default function ExamInterface() {
     } else {
       setDescriptiveAnswer(ans?.value || "");
     }
-  }, [currentQuestionIndex, currentQ]);
+  }, [currentQuestionIndex, currentQ, answers]);
 
   const handleSelectOption = (i: number) => {
     setSelectedOption(i);
@@ -489,11 +489,10 @@ export default function ExamInterface() {
                   <button
                     key={i}
                     onClick={() => handleSelectOption(i)}
-                    className={`w-full text-left px-5 py-3.5 rounded-xl border text-sm transition-all duration-150 ${
-                      selectedOption === i
-                        ? "border-primary/60 bg-primary/10 text-primary shadow-glow-sm"
-                        : "border-border/50 hover:border-border bg-card text-foreground"
-                    }`}
+                    className={`w-full text-left px-5 py-3.5 rounded-xl border text-sm transition-all duration-150 ${selectedOption === i
+                      ? "border-primary/60 bg-primary/10 text-primary shadow-glow-sm"
+                      : "border-border/50 hover:border-border bg-card text-foreground"
+                      }`}
                   >
                     <span className="font-mono text-xs opacity-60 mr-3">{String.fromCharCode(65 + i)}.</span>
                     {opt}

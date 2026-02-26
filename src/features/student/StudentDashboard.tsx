@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Shield, BookOpen, Clock, Trophy, AlertTriangle, Lock, Play,
-  TrendingUp, ChevronRight, Bell, LogOut, User, Calendar
+  TrendingUp, ChevronRight, Bell, LogOut, User, Calendar, ClipboardList, BarChart2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -73,7 +73,7 @@ export default function StudentDashboard() {
           <div className="flex items-start justify-between">
             <div>
               <h1 className="text-2xl font-extrabold tracking-tight mb-1">
-                Good morning, Demo Student 👋
+                Good morning, Demo Student
               </h1>
               <p className="text-muted-foreground text-sm">
                 You have <span className="text-warning font-medium">1 active exam</span> and 1 upcoming this week.
@@ -102,13 +102,12 @@ export default function StudentDashboard() {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-5 py-2 rounded-lg text-sm font-medium capitalize transition-all ${
-                activeTab === tab
+              className={`px-5 py-2 rounded-lg text-sm font-medium capitalize transition-all ${activeTab === tab
                   ? "bg-primary text-primary-foreground shadow-glow-sm"
                   : "text-muted-foreground hover:text-foreground"
-              }`}
+                }`}
             >
-              {tab === "exams" ? "📋 " : "📊 "}
+              {tab === "exams" ? <ClipboardList className="w-4 h-4 mr-2" /> : <BarChart2 className="w-4 h-4 mr-2" />}
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
             </button>
           ))}
